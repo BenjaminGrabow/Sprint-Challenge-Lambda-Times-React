@@ -30,7 +30,7 @@ this.setState({
   }
 
   selectedImage = () => {
-    return <img src={this.state.carousel[this.state.index]} style={{display: 'block'}} />
+    return <img src={this.state.carousel[this.state.index]} style={{display: 'block'}} alt="carousel"  />
   }
   
   render(){
