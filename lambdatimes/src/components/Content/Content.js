@@ -20,6 +20,20 @@ export default class Content extends Component {
     };
   }
 
+  componentWillMount() {
+    localStorage.getItem('username') && this.setState({
+      username: JSON.parse(localStorage.getItem('username'))
+    })
+
+    localStorage.getItem('password') && this.setState({
+      password: JSON.parse(localStorage.getItem('password'))
+    })
+
+    localStorage.getItem('loggedIn') && this.setState({
+      loggedIn: JSON.parse(localStorage.getItem('loggedIn'))
+    })
+  };
+
   componentDidMount() {
     this.setState({
       tabs: tabData,
@@ -52,6 +66,14 @@ export default class Content extends Component {
         loggedIn: "yes"
       })
     }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('username', JSON.stringify(nextState.username));
+
+    localStorage.setItem('password', JSON.stringify(nextState.password));
+
+    localStorage.setItem('loggedIn', JSON.stringify(nextState.loggedIn));
   }
 
   render() {
