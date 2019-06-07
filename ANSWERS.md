@@ -4,6 +4,8 @@ As your app grows, you can catch a lot of bugs with typechecking. For some appli
 
 - [ ] Describe a life-cycle event in React?
 
+Lifecycle's in React are set of phases in a component’s life: Birth/Mounting, Growth/Updating and Death/Unmounting.
+
 componentDidMount():
 Your component has been mounted and is now ready, that’s when the next React lifecycle method componentDidMount() comes in play.
 This life-cycle is called as soon as the component is mounted and ready. This is a good place to initiate API calls, if you need to load data from a remote endpoint.Unlike the render() method, componentDidMount() allows the use of setState(). Calling the setState() here will update state and cause another rendering but it will happen before the browser updates the UI. This is to ensure that the user will not see any UI updates with the double rendering.
