@@ -1,6 +1,76 @@
 import React, { Component } from 'react';
 import { carouselData } from '../../data'
-// Complete this Carousel 
+import styled from 'styled-components';
+
+const Div = styled.div`
+ width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 16px;
+
+@media (min-width: 1200px) {
+    width: 1200px;  
+}
+
+span {
+  display: flex;
+  justify-content: center;
+  align-items: none;
+  flex-direction: row;
+  color: #fff;
+  background-color: #333;
+  font-size: 40px;
+  border-radius: 50%;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  top: 50%;
+  left: 25px;
+  transform: translate(0, -50%);
+
+  &:hover {
+    color: #333;
+  background-color: #fff;
+  border: 2px solid #333;
+  }
+}
+
+p {
+  display: flex;
+  justify-content: center;
+  align-items: none;
+  flex-direction: row;
+  color: #fff;
+  background-color: #333;
+  font-size: 40px;
+  border-radius: 50%;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  top: 45%;
+  right: 25px;
+  transform: translate(0, -60%);
+
+  &:hover {
+    color: #333;
+  background-color: #fff;
+  border: 2px solid #333;
+  }
+}
+
+img {
+  width: 100%;
+  display: none;
+}
+`;
+
 export default class Carousel extends Component {
   constructor(props){
     super(props);
@@ -35,11 +105,11 @@ this.setState({
   
   render(){
     return (
-      <div className="carousel">
-        <div className="left-button" onClick={this.leftClick}>{"<"}</div>
+      <Div>
+        <span onClick={this.leftClick}>{"<"}</span>
         {this.selectedImage()}
-        <div className="right-button" onClick={this.rightClick}>{">"}</div>
-      </div>
+        <p onClick={this.rightClick}>{">"}</p>
+      </Div>
     )
   }
 }
