@@ -65,6 +65,20 @@ article {
   }
 }
 
+aside {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+  flex: 1;
+  font-size: 11px;
+  font-weight: bold;
+
+  span {
+    cursor: pointer;
+  }
+}
+
 
 `;
 
@@ -75,12 +89,12 @@ const TopBar = () => {
         <figure>
           <span>TOPICS</span><span>SEARCH</span>
         </figure>
-        <article className="container-center">
+        <article>
           <span>GENERAL</span><span>BROWNBAG</span><span>RANDOM</span><span>MUSIC</span><span>ANNOUNCEMENTS</span>
         </article>
-        <div className="container-right">
+        <aside>
           <span>LOG IN</span>
-        </div>
+        </aside>
       </section>
     </Div>
   )
