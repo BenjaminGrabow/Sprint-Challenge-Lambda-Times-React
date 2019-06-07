@@ -54,7 +54,7 @@ p {
   width: 50px;
   height: 50px;
   cursor: pointer;
-  top: 45%;
+  top: 44%;
   right: 25px;
   transform: translate(0, -60%);
 

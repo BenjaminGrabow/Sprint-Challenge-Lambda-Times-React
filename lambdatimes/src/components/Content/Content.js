@@ -3,6 +3,13 @@ import Container from "./Container";
 import Login from "../Login";
 import hOC from "./hOC";
 import { tabData, cardData } from '../../data';
+import styled from 'styled-components';
+
+const Div = styled.div`
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+`;
 
 const WhichSite = hOC(Login, Container)
 
@@ -78,7 +85,7 @@ export default class Content extends Component {
 
   render() {
     return (
-      <div className="content-container">
+      <Div>
         <WhichSite
          theTabs={this.state.tabs}
           theSelectedTab={this.changeSelected}
@@ -88,7 +95,7 @@ export default class Content extends Component {
           toPostpage={this.goToPostPage}
           loggedIn={this.state.loggedIn}
           />
-      </div>
+      </Div>
     );
   }
 }
