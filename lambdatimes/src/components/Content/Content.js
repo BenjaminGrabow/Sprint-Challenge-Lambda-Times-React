@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Tabs from './Tabs';
 import Cards from './Cards';
 
-// Importing our tab and card data. No need to change anything here.
 import { tabData, cardData } from '../../data';
 
 export default class Content extends Component {
@@ -17,15 +16,12 @@ export default class Content extends Component {
   }
 
   componentDidMount() {
-    // Once the component has mounted, get the data and reflect that data on the state.
     this.setState({
       tabs: tabData,
       cards: cardData
     })  }
 
   changeSelected = tab => {
-    // this function should take in the tab and update the state with the new tab.
-    console.log(tab)
     this.setState({
       selected: tab
     })
