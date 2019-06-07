@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import Tabs from './Tabs';
-import Cards from './Cards';
-import Carousel from "../Carousel/Carousel";
-
+import Container from "./Container";
+import Login from "../Login";
+import hOC from "./hOC";
 import { tabData, cardData } from '../../data';
+
+const WhichSite = hOC(Login, Container)
+
 
 export default class Content extends Component {
   constructor(props) {
@@ -11,7 +13,10 @@ export default class Content extends Component {
     this.state = {
       selected: 'all',
       tabs: [],
-      cards: []
+      cards: [],
+      username: "",
+      password: "",
+      loggedIn: "no",
     };
   }
 
@@ -32,12 +37,35 @@ export default class Content extends Component {
     return (this.state.selected !== "all" ? this.state.cards.filter(card => card.tab === this.state.selected) : this.state.cards);
   };
 
+  changePassword = (event) => {
+    this.setState({ password: event.target.value })
+  }
+
+  changeUsername = (event) => {
+    this.setState({ username: event.target.value })
+  }
+
+  goToPostPage = () => {
+    if (this.state.username.length > 5 &&
+       this.state.password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/)) {
+      this.setState({
+        loggedIn: "yes"
+      })
+    }
+  }
+
   render() {
     return (
       <div className="content-container">
-        <Tabs tabs={this.state.tabs} selectedTab={this.changeSelected} />
-        <Carousel />
-        <Cards cards={this.filterCards()} />
+        <WhichSite
+         theTabs={this.state.tabs}
+          theSelectedTab={this.changeSelected}
+          theCards={this.filterCards()} 
+          thePassword={event => this.changePassword(event)}
+          theUsername={event => this.changeUsername(event)}
+          toPostpage={this.goToPostPage}
+          loggedIn={this.state.loggedIn}
+          />
       </div>
     );
   }
