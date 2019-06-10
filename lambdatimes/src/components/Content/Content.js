@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-
-import Tabs from './Tabs';
-import Cards from './Cards';
-
-// Importing our tab and card data. No need to change anything here.
+import Container from "./Container";
+import Login from "../Login";
+import hOC from "./hOC";
 import { tabData, cardData } from '../../data';
+import styled from 'styled-components';
+
+const Div = styled.div`
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+`;
+
+const WhichSite = hOC(Login, Container)
+
 
 export default class Content extends Component {
   constructor(props) {
@@ -12,45 +20,82 @@ export default class Content extends Component {
     this.state = {
       selected: 'all',
       tabs: [],
-      cards: []
+      cards: [],
+      username: "",
+      password: "",
+      loggedIn: "no",
     };
   }
 
+  componentWillMount() {
+    localStorage.getItem('username') && this.setState({
+      username: JSON.parse(localStorage.getItem('username'))
+    })
+
+    localStorage.getItem('password') && this.setState({
+      password: JSON.parse(localStorage.getItem('password'))
+    })
+
+    localStorage.getItem('loggedIn') && this.setState({
+      loggedIn: JSON.parse(localStorage.getItem('loggedIn'))
+    })
+  };
+
   componentDidMount() {
-    // Once the component has mounted, get the data and reflect that data on the state.
+    this.setState({
+      tabs: tabData,
+      cards: cardData
+    })
   }
 
   changeSelected = tab => {
-    // this function should take in the tab and update the state with the new tab.
+    this.setState({
+      selected: tab
+    })
   };
 
   filterCards = () => {
-    /* Right now this function only returns the cards on state.
-      We're going to make this function more dynamic
-      by using it to filter out our cards for when a tab is selcted
-      
-      Notice that we're passing this function to our <Cards /> component below.
-      This function returns an array of cards, so we can just pass it down as such.
-
-      Your algorithim for the logic here is as follows: 
-        - if the selected tab is 'all' it should return all 
-          of the items from cardData. 
-        - else, it should only return those cards whose 'tab' matched this.state.selected.
-    */
-    return this.state.cards;
+    return (this.state.selected !== "all" ? this.state.cards.filter(card => card.tab === this.state.selected) : this.state.cards);
   };
+
+  changePassword = (event) => {
+    this.setState({ password: event.target.value })
+  }
+
+  changeUsername = (event) => {
+    this.setState({ username: event.target.value })
+  }
+
+  goToPostPage = () => {
+    if (this.state.username.length > 5 &&
+       this.state.password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/)) {
+      this.setState({
+        loggedIn: "yes"
+      })
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('username', JSON.stringify(nextState.username));
+
+    localStorage.setItem('password', JSON.stringify(nextState.password));
+
+    localStorage.setItem('loggedIn', JSON.stringify(nextState.loggedIn));
+  }
 
   render() {
     return (
-      <div className="content-container">
-        {/* 
-          Add 2 props to the Tabs component, 
-          `selectedTab` that includes the currently selected tab
-          and `selectTabHandler` that includes the function to change the selected tab
-        */}
-        <Tabs tabs={this.state.tabs} />
-        <Cards cards={this.filterCards()} />
-      </div>
+      <Div>
+        <WhichSite
+         theTabs={this.state.tabs}
+          theSelectedTab={this.changeSelected}
+          theCards={this.filterCards()} 
+          thePassword={event => this.changePassword(event)}
+          theUsername={event => this.changeUsername(event)}
+          toPostpage={this.goToPostPage}
+          loggedIn={this.state.loggedIn}
+          />
+      </Div>
     );
   }
 }
